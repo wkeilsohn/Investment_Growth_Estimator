@@ -56,7 +56,16 @@
        AGE-PARA.
            PERFORM BIRTH-DATE-PARA UNTIL AGE_VERIFIED = 1
            .
-
+           CALL "P_Age" USING WS-CURRENT-DAY,
+                             WS-CURRENT-MONTH,
+                             WS-CURRENT-YEAR,
+                             BIRTH_DAY,
+                             BIRTH_MONTH,
+                             BIRTH_YEAR,
+                             AGE
+           .
+           DISPLAY "YOUR CALCULATED AGE IS: " AGE
+           .
 
        BIRTH-DATE-PARA.
            DISPLAY "PLEASE ENTER YOUR BIRTHDAY BELOW"
