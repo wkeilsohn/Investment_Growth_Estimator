@@ -18,6 +18,10 @@
          05 BIRTH_MONTH PIC 9(2) VALUE ZEROS.
          05 BIRTH_DAY PIC 9(2) VALUE ZEROES.
          05 BIRTH_YEAR PIC 9(4) VALUE ZEROS.
+         05 BIRTH_DAY_CORRECT PIC 9 VALUE 0.
+           88 DAY-TRUE VALUE 1.
+           88 DAY-FALSE VALUE 0.
+         05 BIRTH_DAY_COMMON PIC X.
        01 AGE PIC 9(3) VALUE 0.
        01 WS-CURRENT-DATE-FIELDS. *> FROM IBM.
          05 WS-CURRENT-DATE.
@@ -38,6 +42,28 @@
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-FIELDS
            .
 
+       AGE-PARA.
+           PERFORM BIRTH-DATE-PARA UNTIL BIRTH_DAY_CORRECT = 1
+           .
+
+       BIRTH-DATE-PARA.
+           DISPLAY "PLEASE ENTER YOUR BIRTHDAY BELOW"
+           .
+           DISPLAY "PLEASE ENTER YOUR BIRTH YEAR: " WITH NO ADVANCING
+           ACCEPT BIRTH_YEAR
+           .
+           DISPLAY "PLEASE ENTER YOUR BIRTH MONTH: " WITH NO ADVANCING
+           ACCEPT BIRTH_MONTH
+           .
+           DISPLAY "PLEASE ENTER THE DAY OF THE MONTH YOU WERE BORN: "
+             WITH NO ADVANCING
+           ACCEPT BIRTH_DAY
+           .
+           DISPLAY BIRTH_DATE
+           .
+
+       COMMON-DATE-PARA.
+                    
 
 
            STOP RUN. 
