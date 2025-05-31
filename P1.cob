@@ -45,6 +45,14 @@
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-FIELDS
            .
 
+       MAIN-PARA.
+           PERFORM AGE-PARA
+           .
+           PERFORM INVEST-PARA
+           .
+           STOP RUN
+           .
+
        AGE-PARA.
            PERFORM BIRTH-DATE-PARA UNTIL AGE_VERIFIED = 1
            .
