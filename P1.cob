@@ -45,7 +45,7 @@
            MOVE FUNCTION CURRENT-DATE TO WS-CURRENT-DATE-FIELDS
            .
 
-       MAIN-PARA.
+       MAIN-PARA. *>"OOP"
            PERFORM AGE-PARA
            .
            PERFORM INVEST-PARA
@@ -79,15 +79,15 @@
            CALL "PUser" USING USER_ANSWER,
                               BIRTH_DAY_CORRECT
            .
-           MOVE BIRTH_DAY_CORRECT TO AGE_VERIFIED
+           MOVE BIRTH_DAY_CORRECT TO AGE_VERIFIED *> Probably extra. 
            .
 
        COMMON-DATE-PARA.
            CALL "P1TM" USING BIRTH_MONTH,
                              BIRTH_MONTH_NAME
            .
-           STRING BIRTH_MONTH_NAME DELIMITED BY " " BIRTH_DAY DELIMITED
-             BY ", " BIRTH_YEAR INTO BIRTH_DAY_COMMON
+           STRING BIRTH_MONTH_NAME " " BIRTH_DAY ", " BIRTH_YEAR
+             DELIMITED BY SIZE INTO BIRTH_DAY_COMMON
            .
            DISPLAY "THE BIRTHDAY YOU HAVE ENTERED IS: " BIRTH_DAY_COMMON
            .
