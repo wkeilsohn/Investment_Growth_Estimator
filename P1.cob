@@ -24,6 +24,7 @@
          05 BIRTH_DAY_COMMON PIC X(50).
          05 BIRTH_MONTH_NAME PIC A(10).
        01 AGE PIC 9(3) VALUE 0.
+       01 AGE_VERIFIED PIC 9(1) VALUE 0.
        01 WS-CURRENT-DATE-FIELDS. *> FROM IBM.
          05 WS-CURRENT-DATE.
            10 WS-CURRENT-YEAR PIC 9(4).
@@ -45,8 +46,9 @@
            .
 
        AGE-PARA.
-           PERFORM BIRTH-DATE-PARA UNTIL BIRTH_DAY_CORRECT = 1
+           PERFORM BIRTH-DATE-PARA UNTIL AGE_VERIFIED = 1
            .
+
 
        BIRTH-DATE-PARA.
            DISPLAY "PLEASE ENTER YOUR BIRTHDAY BELOW"
@@ -68,6 +70,8 @@
            .
            CALL "PUser" USING USER_ANSWER,
                               BIRTH_DAY_CORRECT
+           .
+           MOVE BIRTH_DAY_CORRECT TO AGE_VERIFIED
            .
 
        COMMON-DATE-PARA.
