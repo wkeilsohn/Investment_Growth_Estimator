@@ -7,13 +7,12 @@
        DATA DIVISION.
        FILE SECTION.
        WORKING-STORAGE SECTION.
-       01 STARTING_AMOUNT PIC 9 VALUE 0.
-       01 ENDING_AMOUNT PIC 9 VALUE 0.
-       01 DIFFERENCE_AMOUNT PIC 9 VALUE 0.
-       01 MONTHS_BETWEEN PIC 9(2) VALUE 1. 
-       01 PERCENT_CHANGE PIC 9P VALUE 0.
-       01 PERCENT_CHANGE_YEAR PIC 9P VALUE 0.
-       01 GOAL_AMOUNT PIC 9 VALUE 1000000.
+       01 STARTING_AMOUNT PIC 9(10) VALUE ZEROS.
+       01 ENDING_AMOUNT PIC 9(10) VALUE ZEROS.
+       01 DIFFERENCE_AMOUNT PIC 9(10) VALUE ZEROS.
+       01 PERCENT_CHANGE PIC 99V9999 VALUE 0.
+       01 PERCENT_CHANGE_YEAR PIC 99V9999 VALUE 0.
+       01 GOAL_AMOUNT PIC 9(10) VALUE 1000000.
        01 BIRTH_DATE.
          05 BIRTH_MONTH PIC 9(2) VALUE ZEROS.
          05 BIRTH_DAY PIC 9(2) VALUE ZEROES.
@@ -115,9 +114,19 @@
                               USER_AGREE
            .
            IF USER_AGREE = 1 THEN
-               DISPLAY "SECOND"
+               CALL "PINV1" USING STARTING_AMOUNT,
+                                  ENDING_AMOUNT,
+                                  DIFFERENCE_AMOUNT,
+                                  PERCENT_CHANGE,
+                                  PERCENT_CHANGE_YEAR
+               DISPLAY "YOUR MONTHLY INTEREST RATE IS: " PERCENT_CHANGE
+               DISPLAY "YOUR ANNUAL INTEREST RATE IS: "
+                 PERCENT_CHANGE_YEAR
+               DISPLAY "DO YOU HAVE A GOAL FOR THIS ACCOUNT? [Y/n] "
+                 WITH NO ADVANCING
+               ACCEPT USER_ANSWER
            ELSE
-               DISPLAY "pREDICT"
+               DISPLAY "PREDICT"
            END-IF
            .
            

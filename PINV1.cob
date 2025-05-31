@@ -1,0 +1,41 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PINV1.
+       AUTHOR. WILLIAM-KEILSOHN.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 MONTHS_BETWEEN PIC 9(2) VALUE 0.
+       01 MONTH_DELTA PIC 9(10)V99 VALUE 0.
+
+       LINKAGE SECTION.
+       01 STARTING_VALUE PIC 9(10) VALUE 0.
+       01 ENDING_VALUE PIC 9(10) VALUE 0.
+       01 DIFF_VALUE PIC 9(10) VALUE 0.
+       01 PER_DELTA PIC 99V9999 VALUE 0.
+       01 PCY PIC 99V9999 VALUE 0.
+
+       PROCEDURE DIVISION USING STARTING_VALUE,
+                                ENDING_VALUE,
+                                DIFF_VALUE,
+                                PER_DELTA,
+                                PCY.
+           DISPLAY "PLEASE ENTER THE SECOND ACCOUNT VALUE: " WITH NO
+             ADVANCING
+           ACCEPT ENDING_VALUE
+           .
+           COMPUTE DIFF_VALUE = ENDING_VALUE - STARTING_VALUE
+           .
+           DISPLAY "HOW MANY MONTHS PASSED BETWEEN EVALUATIONS? " WITH
+             NO ADVANCING
+           ACCEPT MONTHS_BETWEEN
+           .
+           COMPUTE MONTH_DELTA = (DIFF_VALUE / MONTHS_BETWEEN)
+           .
+           COMPUTE PER_DELTA = (MONTH_DELTA / STARTING_VALUE)
+           .
+           COMPUTE PCY = ((1 + PER_DELTA) ** 12) - 1
+           .
+           EXIT PROGRAM
+           .
