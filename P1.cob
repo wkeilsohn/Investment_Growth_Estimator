@@ -21,7 +21,8 @@
          05 BIRTH_DAY_CORRECT PIC 9 VALUE 0.
            88 DAY-TRUE VALUE 1.
            88 DAY-FALSE VALUE 0.
-         05 BIRTH_DAY_COMMON PIC X.
+         05 BIRTH_DAY_COMMON PIC X(50).
+         05 BIRTH_MONTH_NAME PIC A(10).
        01 AGE PIC 9(3) VALUE 0.
        01 WS-CURRENT-DATE-FIELDS. *> FROM IBM.
          05 WS-CURRENT-DATE.
@@ -36,6 +37,7 @@
          05 WS-DIFF-FROM-GMT PIC S9(4).
        01 YEARS_TO_GROW PIC 9 VALUE 0.
        01 GOAL_AGE PIC 9(1) VALUE 0.
+       01 USER_ANSWER PIC A(3) VALUE "N".
 
        PROCEDURE DIVISION.
 
@@ -59,11 +61,29 @@
              WITH NO ADVANCING
            ACCEPT BIRTH_DAY
            .
-           DISPLAY BIRTH_DATE
+           PERFORM COMMON-DATE-PARA
+           .
+           DISPLAY "IS THIS BIRTHDAY CORRECT? [Y/n] " WITH NO ADVANCING
+           ACCEPT USER_ANSWER
+           .
+           CALL "PUser" USING USER_ANSWER,
+                              BIRTH_DAY_CORRECT
            .
 
        COMMON-DATE-PARA.
-                    
+           CALL "P1TM" USING BIRTH_MONTH,
+                             BIRTH_MONTH_NAME
+           .
+           STRING BIRTH_MONTH_NAME DELIMITED BY " " BIRTH_DAY DELIMITED
+             BY ", " BIRTH_YEAR INTO BIRTH_DAY_COMMON
+           .
+           DISPLAY "THE BIRTHDAY YOU HAVE ENTERED IS: " BIRTH_DAY_COMMON
+           .
 
-
-           STOP RUN. 
+       INVEST-PARA.
+           DISPLAY "PLEASE ENTER YOUR INITIAL INVESTMENT AMOUNT: " WITH
+             NO ADVANCING
+           ACCEPT STARTING_AMOUNT
+           .
+           
+       STOP RUN. 
