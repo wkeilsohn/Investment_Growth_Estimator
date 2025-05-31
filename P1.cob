@@ -39,6 +39,7 @@
        01 YEARS_TO_GROW PIC 9 VALUE 0.
        01 GOAL_AGE PIC 9(1) VALUE 0.
        01 USER_ANSWER PIC A(3) VALUE "N".
+       01 USER_AGREE PIC 9 VALUE 0.
 
        PROCEDURE DIVISION.
 
@@ -105,6 +106,19 @@
            DISPLAY "PLEASE ENTER YOUR INITIAL INVESTMENT AMOUNT: " WITH
              NO ADVANCING
            ACCEPT STARTING_AMOUNT
+           .
+           DISPLAY "HAS AN INVESTMENT PERIOD PASSED? [Y/n] " WITH NO
+             ADVANCING
+             ACCEPT USER_ANSWER
+           .
+           CALL "PUser" USING USER_ANSWER,
+                              USER_AGREE
+           .
+           IF USER_AGREE = 1 THEN
+               DISPLAY "SECOND"
+           ELSE
+               DISPLAY "pREDICT"
+           END-IF
            .
            
        STOP RUN. 

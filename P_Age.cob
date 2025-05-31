@@ -26,9 +26,7 @@
                                 AGE.
            COMPUTE YEAR_DIFF = TYEAR - BYEAR
            .
-
-           DISPLAY TMONTH
-           .
+           
            IF BMONTH > TMONTH THEN
                COMPUTE AGE = YEAR_DIFF - 1
            END-IF
