@@ -35,11 +35,12 @@
            10 WS-CURRENT-SECOND PIC 9(2).
            10 WS-CURRENT-MS PIC 9(2).
          05 WS-DIFF-FROM-GMT PIC S9(4).
-       01 YEARS_TO_GROW PIC 9 VALUE 0.
+       01 YEARS_TO_GROW PIC 9(3) VALUE 0.
        01 GOAL_AGE PIC 9(1) VALUE 0.
        01 USER_ANSWER PIC A(3) VALUE "N".
        01 USER_AGREE PIC 9 VALUE 0.
        01 GOAL_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
+       01 DIFF_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
 
        PROCEDURE DIVISION.
 
@@ -123,8 +124,12 @@
                DISPLAY "YOUR MONTHLY INTEREST RATE IS: " PERCENT_CHANGE
                DISPLAY "YOUR ANNUAL INTEREST RATE IS: "
                  PERCENT_CHANGE_YEAR
+               PERFORM EST-PARA
+           ELSE
+               PERFORM SPEC-PARA
            END-IF
            .
+       EST-PARA.
            MOVE 0 TO USER_AGREE *> REST THE VALUE
            .
            DISPLAY "DO YOU HAVE A GOAL FOR THIS ACCOUNT? [Y/n] "
@@ -150,6 +155,22 @@
                               GOAL_AGE,
                               YEARS_TO_GROW,
                               PERCENT_CHANGE_YEAR
+           .
+       SPEC-PARA.
+           DISPLAY "PLEASE ENTER ESTIMATED INTEREST AS A DECIMAL: " WITH
+             NO ADVANCING
+           ACCEPT PERCENT_CHANGE_YEAR
+           .
+           DISPLAY "ENTER YEARS OF GROWTH: " WITH NO ADVANCING
+           ACCEPT YEARS_TO_GROW
+           .
+           DISPLAY YEARS_TO_GROW
+           .
+           CALL "PINV3" USING PERCENT_CHANGE_YEAR,
+                              STARTING_AMOUNT,
+                              YEARS_TO_GROW,
+                              GOAL_FORMAT,
+                              DIFF_FORMAT
            .
            
        STOP RUN. 

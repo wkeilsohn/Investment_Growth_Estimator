@@ -1,0 +1,58 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PINV3.
+       AUTHOR. WILLIAM-KEILSOHN.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 MONTHS_TO_YEAR PIC 9(2) VALUE 12.
+       01 END_VALUE PIC 9(10) VALUE ZEROS.
+       01 GROWTH_DIFF PIC 9(10) VALUE ZEROS.
+       01 USER_IN_COMP PIC X(1).
+       01 USER_VAL_COMP PIC X(1) VALUE 'A'.
+       01 COMP_PERIOD PIC 9(2) VALUE 1.
+       01 CVALUE PIC 9(10) VALUE ZEROS.
+
+       LINKAGE SECTION.
+       01 PER_GW PIC 99V9999 VALUE ZEROS.
+       01 START_VALUE PIC 9(10) VALUE ZEROES.
+       01 YEARS_PASSED PIC 9(3) VALUE ZEROES.
+       01 END_VALUE_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
+       01 GW_DIFF_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
+
+       PROCEDURE DIVISION USING PER_GW,
+                                START_VALUE,
+                                YEARS_PASSED,
+                                END_VALUE_FORMAT,
+                                GW_DIFF_FORMAT.
+           DISPLAY
+            "DOES YOUR INVESTMENT COMPOUND MONTHLY [M] OR ANNUALY [A]? "
+             WITH NO ADVANCING
+           ACCEPT USER_IN_COMP
+           .
+           MOVE FUNCTION upper-case (USER_IN_COMP) TO USER_VAL_COMP
+           .
+
+           IF USER_VAL_COMP = 'M' THEN
+               MOVE 12 TO COMP_PERIOD
+           .
+           DISPLAY YEARS_PASSED
+           .
+           COMPUTE END_VALUE = ((1 + (PER_GW / COMP_PERIOD)) **
+                                (COMP_PERIOD * YEARS_PASSED)) *
+             START_VALUE
+           .
+           COMPUTE GROWTH_DIFF = END_VALUE - START_VALUE
+           .
+           MOVE END_VALUE TO END_VALUE_FORMAT
+           .
+           MOVE GROWTH_DIFF TO GW_DIFF_FORMAT
+           .
+           DISPLAY "YOUR INVESTMENT WILL GROW BY " GW_DIFF_FORMAT
+           .
+           DISPLAY "THE ESTIMATED TOTAL VALUE OF YOUR INVESTMENT IS: "
+             END_VALUE_FORMAT
+           .
+           EXIT PROGRAM
+           .
