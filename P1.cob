@@ -122,12 +122,32 @@
                DISPLAY "YOUR MONTHLY INTEREST RATE IS: " PERCENT_CHANGE
                DISPLAY "YOUR ANNUAL INTEREST RATE IS: "
                  PERCENT_CHANGE_YEAR
-               DISPLAY "DO YOU HAVE A GOAL FOR THIS ACCOUNT? [Y/n] "
-                 WITH NO ADVANCING
-               ACCEPT USER_ANSWER
-           ELSE
-               DISPLAY "PREDICT"
            END-IF
+           .
+           MOVE 0 TO USER_AGREE *> REST THE VALUE
+           .
+           DISPLAY "DO YOU HAVE A GOAL FOR THIS ACCOUNT? [Y/n] "
+             WITH NO ADVANCING
+           ACCEPT USER_ANSWER
+           .
+           CALL "PUser" USING USER_ANSWER,
+                              USER_AGREE
+           .
+           IF USER_AGREE = 1 THEN
+               DISPLAY "PLEASE ENTER YOUR GOAL AMOUNT: " WITH NO
+                 ADVANCING
+               ACCEPT GOAL_AMOUNT
+           ELSE
+               DISPLAY "A GOAL AMOUNT OF " GOAL_AMOUNT
+                 " WILL BE USED."
+           END-IF
+           .
+           CALL "PINV2" USING ENDING_AMOUNT,
+                              GOAL_AMOUNT,
+                              AGE,
+                              GOAL_AGE,
+                              YEARS_TO_GROW,
+                              PERCENT_CHANGE_YEAR
            .
            
        STOP RUN. 
