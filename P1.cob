@@ -39,6 +39,7 @@
        01 GOAL_AGE PIC 9(1) VALUE 0.
        01 USER_ANSWER PIC A(3) VALUE "N".
        01 USER_AGREE PIC 9 VALUE 0.
+       01 GOAL_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
 
        PROCEDURE DIVISION.
 
@@ -138,7 +139,8 @@
                  ADVANCING
                ACCEPT GOAL_AMOUNT
            ELSE
-               DISPLAY "A GOAL AMOUNT OF " GOAL_AMOUNT
+               MOVE GOAL_AMOUNT TO GOAL_FORMAT
+               DISPLAY "A GOAL AMOUNT OF " GOAL_FORMAT
                  " WILL BE USED."
            END-IF
            .
