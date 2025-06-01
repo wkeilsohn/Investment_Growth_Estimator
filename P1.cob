@@ -41,6 +41,7 @@
        01 USER_AGREE PIC 9 VALUE 0.
        01 GOAL_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
        01 DIFF_FORMAT PIC $ZZ,ZZZ,ZZZ.ZZCR VALUE ZEROS.
+       01 USER_SATISFIED PIC 9 VALUE 1.
 
        PROCEDURE DIVISION.
 
@@ -50,7 +51,7 @@
        MAIN-PARA. *>"OOP"
            PERFORM AGE-PARA
            .
-           PERFORM INVEST-PARA
+           PERFORM INVEST-PARA UNTIL USER_SATISFIED = 0
            .
            STOP RUN
            .
@@ -129,6 +130,16 @@
                PERFORM SPEC-PARA
            END-IF
            .
+           DISPLAY "WOULD YOU LIKE TO TRY AGAIN? [Y/n] " WITH NO
+           ADVANCING
+           ACCEPT USER_ANSWER
+           .
+           CALL "PUser" USING USER_ANSWER,
+                              USER_AGREE
+           .
+           MOVE USER_AGREE TO USER_SATISFIED
+           .
+
        EST-PARA.
            MOVE 0 TO USER_AGREE *> REST THE VALUE
            .
@@ -164,13 +175,27 @@
            DISPLAY "ENTER YEARS OF GROWTH: " WITH NO ADVANCING
            ACCEPT YEARS_TO_GROW
            .
-           DISPLAY YEARS_TO_GROW
-           .
            CALL "PINV3" USING PERCENT_CHANGE_YEAR,
                               STARTING_AMOUNT,
                               YEARS_TO_GROW,
                               GOAL_FORMAT,
                               DIFF_FORMAT
+           .
+
+       RESET-PARA. *> IF I COMMENT IT OUT, THE PROGRAM BREAKS.
+           MOVE 0 TO STARTING_AMOUNT
+           .
+           MOVE 0 TO ENDING_AMOUNT
+           .
+           MOVE 0 TO PERCENT_CHANGE
+           .
+           MOVE 0 TO PERCENT_CHANGE_YEAR
+           .
+           MOVE 0 TO YEARS_TO_GROW
+           .
+           MOVE 0 TO DIFFERENCE_AMOUNT
+           .
+           MOVE 1000000 TO GOAL_AMOUNT
            .
            
        STOP RUN. 

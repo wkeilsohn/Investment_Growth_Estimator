@@ -16,6 +16,8 @@
        PROCEDURE DIVISION USING USER_RSPONSE,
        USER_VALUE.
 
+           MOVE 0 TO USER_VALUE
+           .
            MOVE FUNCTION upper-case (USER_RSPONSE) TO USER_RSPONSE_STORE
            .
            INSPECT POSITIVE_ANSWERS

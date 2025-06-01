@@ -33,11 +33,8 @@
            .
            MOVE FUNCTION upper-case (USER_IN_COMP) TO USER_VAL_COMP
            .
-
            IF USER_VAL_COMP = 'M' THEN
                MOVE 12 TO COMP_PERIOD
-           .
-           DISPLAY YEARS_PASSED
            .
            COMPUTE END_VALUE = ((1 + (PER_GW / COMP_PERIOD)) **
                                 (COMP_PERIOD * YEARS_PASSED)) *
